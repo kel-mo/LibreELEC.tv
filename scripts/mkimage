@@ -100,6 +100,10 @@ sync
 # add resize mark
 mkdir "${IMG_TMP}/part2.fs"
 touch "${IMG_TMP}/part2.fs/.please_resize_me"
+if [ -f "${STORAGE_SSH_AUTHORIZED_KEYS}" ]; then
+  mkdir -p "${IMG_TMP}/part2.fs/.ssh"
+  cp "${STORAGE_SSH_AUTHORIZED_KEYS}" "${IMG_TMP}/part2.fs/.ssh/authorized_keys"
+fi
 echo "image: populating filesystem on part2..."
 populatefs -U -d "${IMG_TMP}/part2.fs" "${IMG_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
 sync
